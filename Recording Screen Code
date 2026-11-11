@@ -1,0 +1,168 @@
+import 'package:flutter/material.dart';
+
+const blue = Color(0xFF1769F5);
+
+Widget recordingScreen({
+  required bool listening,
+  required int seconds,
+  required String convertedText,
+  required VoidCallback stopRecording,
+  required VoidCallback goBack,
+}) {
+  return Container(
+    width: double.infinity,
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          Color(0xFF07377F),
+          Color(0xFF0056CE),
+          Color(0xFF092C68),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
+    ),
+
+    child: Column(
+      children: [
+        Row(
+          children: [
+            IconButton(
+              onPressed: goBack,
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+            ),
+            const Expanded(
+              child: Text(
+                'Recording',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(width: 48),
+          ],
+        ),
+
+        const Spacer(),
+
+        Container(
+          padding: const EdgeInsets.all(25),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white.withOpacity(0.08),
+            border: Border.all(
+              color: Colors.white24,
+              width: 10,
+            ),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(25),
+            decoration: const BoxDecoration(
+              color: blue,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.mic,
+              size: 58,
+              color: Colors.white,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 28),
+
+        Text(
+          listening ? 'Listening...' : 'Ready to record',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 21,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        const SizedBox(height: 10),
+
+        const Text(
+          'Speak clearly to get better results',
+          style: TextStyle(color: Colors.white70),
+        ),
+
+        const SizedBox(height: 24),
+
+        Text(
+          '${(seconds ~/ 60).toString().padLeft(2, '0')}:'
+          '${(seconds % 60).toString().padLeft(2, '0')}',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+
+        const SizedBox(height: 28),
+
+        InkWell(
+          onTap: stopRecording,
+          child: Container(
+            height: 70,
+            width: 70,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.redAccent,
+                width: 4,
+              ),
+            ),
+            child: const Icon(
+              Icons.stop,
+              color: Colors.redAccent,
+              size: 38,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 28),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(35, (i) {
+            final height = [
+              12, 20, 30, 16, 40, 24, 34, 15
+            ][i % 8].toDouble();
+
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 2),
+              height: height,
+              width: 3,
+              decoration: BoxDecoration(
+                color: Colors.lightBlueAccent,
+                borderRadius: BorderRadius.circular(5),
+              ),
+            );
+          }),
+        ),
+
+        const Spacer(),
+
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text(
+            convertedText.isEmpty
+                ? 'Your speech will appear as text.'
+                : convertedText,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: Colors.white70),
+          ),
+        ),
+      ],
+    ),
+  );
+}
