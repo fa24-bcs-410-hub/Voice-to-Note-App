@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+
+const blue = Color(0xFF1769F5);
+
+Widget convertedScreen({
+  required TextEditingController textController,
+  required bool editing,
+  required VoidCallback toggleEditing,
+  required VoidCallback saveNote,
+  required VoidCallback goBack,
+}) {
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(22, 12, 22, 24),
+
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        IconButton(
+          onPressed: goBack,
+          icon: const Icon(Icons.arrow_back),
+        ),
+
+        const SizedBox(height: 18),
+
+        const Text(
+          'Converted Text',
+          style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        Expanded(
+          child: TextField(
+            controller: textController,
+            readOnly: !editing,
+            maxLines: null,
+            expands: true,
+            maxLength: 500,
+            textAlignVertical: TextAlignVertical.top,
+
+            decoration: InputDecoration(
+              hintText: 'Your converted speech appears here...',
+              filled: true,
+              fillColor: Colors.white,
+
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(
+                  color: Color(0xFFD7E1EE),
+                ),
+              ),
+
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(
+                  color: Color(0xFFD7E1EE),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: toggleEditing,
+                icon: Icon(
+                  editing ? Icons.check : Icons.edit,
+                ),
+                label: Text(
+                  editing ? 'Done' : 'Edit',
+                ),
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 50),
+                  foregroundColor: blue,
+                  side: const BorderSide(color: blue),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(width: 12),
+
+            Expanded(
+              child: ElevatedButton.icon(
+                onPressed: saveNote,
+                icon: const Icon(Icons.save_outlined),
+                label: const Text('Save Note'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(0, 50),
+                  backgroundColor: blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
